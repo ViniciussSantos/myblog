@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Tags — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<header class="page-head">
+  <h1>Tags</h1>
+  <p class="muted">Browse writing by topic.</p>
+</header>
+<ul class="tag-cloud">
+  {% for tag in terms %}
+  <li><a href="{{ tag.permalink | safe }}">{{ tag.name }} <span class="tag-count">{{ tag.pages | length }}</span></a></li>
+  {% endfor %}
+</ul>
+{% endblock content %}

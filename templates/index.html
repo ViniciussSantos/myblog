@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ config.title }} — {{ config.extra.author | default(value="") }}{% endblock title %}
+{% block description %}{{ config.description }}{% endblock description %}
+
+{% block content %}
+<section class="hero">
+  <p class="hero-eyebrow">Hello, I'm {{ config.extra.author | default(value="") }} 👋</p>
+  <h1 class="hero-title">{{ config.title }}</h1>
+  <p class="hero-tagline">{{ config.extra.tagline | default(value=config.description) }}</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="{{ get_url(path="/blog/") | safe }}">Read the blog</a>
+    <a class="btn btn-ghost" href="{{ get_url(path="/about/") | safe }}">About me</a>
+  </div>
+</section>
+
+{% set blog = get_section(path="blog/_index.md") %}
+{% set posts = blog.pages | sort(attribute="date") | reverse %}
+
+<section class="recent">
+  <div class="section-head">
+    <h2>Recent writing</h2>
+    <a class="see-all" href="{{ get_url(path="/blog/") | safe }}">All posts →</a>
+  </div>
+
+  {% if posts | length > 0 %}
+  <ul class="post-list">
+    {% for post in posts | slice(end=5) %}
+    <li class="post-item">
+      <a href="{{ post.permalink | safe }}" class="post-item-link">
+        <span class="post-date">{{ macros::pretty_date(date=post.date) }}</span>
+        <span class="post-title">{{ post.title }}</span>
+        {% if post.description %}
+        <span class="post-desc">{{ post.description }}</span>
+        {% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">No posts yet — check back soon.</p>
+  {% endif %}
+</section>
+{% endblock content %}

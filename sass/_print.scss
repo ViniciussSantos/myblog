@@ -1,0 +1,45 @@
+// Print: make the resume page paper-friendly.
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    background-image: none !important;
+  }
+  .site-header,
+  .site-footer,
+  .print-btn,
+  .skip-link,
+  .theme-toggle { display: none !important; }
+  .container { max-width: 100% !important; padding: 0 !important; }
+  .page, .printable { max-width: 100% !important; }
+  .page-head {
+    border-bottom: 1px solid #000 !important;
+    padding-top: 0 !important;
+  }
+  .prose {
+    color: #000 !important;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+  .prose > * + * { margin-top: 0.8rem; }
+  .prose h2 {
+    font-size: 1.2rem;
+    margin: 1.4rem 0 0.5rem;
+    border-bottom: 1px solid #000 !important;
+  }
+  .prose h3 { font-size: 1.05rem; margin: 1rem 0 0.3rem; }
+  .prose a { color: #000 !important; text-decoration: underline; }
+  .prose pre, .prose code {
+    background: #f4f4f4 !important;
+    border-color: #ccc !important;
+    color: #000 !important;
+  }
+  .prose blockquote {
+    border-left: 3px solid #000 !important;
+    background: #f6f6f6 !important;
+    color: #000 !important;
+  }
+  a[href]::after { content: ""; }
+  .hero-actions, .see-all, .back-link { display: none !important; }
+}

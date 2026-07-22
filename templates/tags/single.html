@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}#{{ term.name }} — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<header class="page-head">
+  <h1>Posts tagged <span class="tag-pill">{{ term.name }}</span></h1>
+  <p><a href="{{ get_url(path="/blog/") | safe }}">← All posts</a></p>
+</header>
+
+{% set posts = term.pages | sort(attribute="date") | reverse %}
+<ul class="post-list">
+  {% for post in posts %}
+  <li class="post-item">
+    <a href="{{ post.permalink | safe }}" class="post-item-link">
+      <span class="post-date">{{ macros::pretty_date(date=post.date) }}</span>
+      <span class="post-title">{{ post.title }}</span>
+      {% if post.description %}<span class="post-desc">{{ post.description }}</span>{% endif %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}

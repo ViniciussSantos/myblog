@@ -1,0 +1,91 @@
+{% import "macros.html" as macros %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+
+  {# Prevent theme flash: settle the theme before paint. #}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        var prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        var theme = stored || (prefersLight ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  {# Styles #}
+  <link rel="stylesheet" href="{{ get_url(path="style.css", trailing_slash=false) | safe }}">
+
+  {# Feeds #}
+  {% if config.generate_feeds %}
+    {% for feed in config.feed_filenames %}
+      <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path=feed, trailing_slash=false) }}">
+    {% endfor %}
+  {% endif %}
+
+  {% block head %}{% endblock head %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{{ config.base_url | default(value="/") | safe }}">
+        <span class="brand-mark">~</span>{{ config.extra.author | default(value=config.title) }}
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        {% for item in config.extra.nav %}
+          {{ macros::nav_link(item=item, current_path=current_path) }}
+        {% endfor %}
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle theme">
+        <svg class="icon icon-sun"  viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><g class="sun-rays"><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></g></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-meta">
+        <p>&copy; {{ now() | date(format="%Y") }} {{ config.extra.author | default(value=config.title) }}.</p>
+        <p class="muted">Built with <a href="https://www.getzola.org" rel="noopener">Zola</a>.</p>
+      </div>
+      {% if config.extra.socials %}
+      <ul class="socials">
+        {% for s in config.extra.socials %}
+          <li><a href="{{ s.url | safe }}" rel="me noopener">{{ s.name }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.querySelector(".theme-toggle");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        var root = document.documentElement;
+        var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("theme", next); } catch (e) {}
+      });
+    })();
+  </script>
+  {% block scripts %}{% endblock scripts %}
+</body>
+</html>

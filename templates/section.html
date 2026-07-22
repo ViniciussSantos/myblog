@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}Blog — {{ config.title }}{% endblock title %}
+{% block description %}{{ section.description | default(value=config.description) }}{% endblock description %}
+
+{% block content %}
+<header class="page-head">
+  <h1>{{ section.title | default(value="Blog") }}</h1>
+  {% if section.description %}<p class="muted">{{ section.description }}</p>{% endif %}
+</header>
+
+{% set posts = section.pages | sort(attribute="date") | reverse %}
+
+{# Group posts by year #}
+{% set_global all_years = [] %}
+{% for post in posts %}
+  {% set year = post.date | date(format="%Y") %}
+  {% if year not in all_years %}
+    {% set_global all_years = all_years | concat(with=year) %}
+  {% endif %}
+{% endfor %}
+
+{% for year in all_years %}
+<section class="year-group">
+  <h2 class="year-heading">{{ year }}</h2>
+  <ul class="post-list">
+    {% for post in posts %}
+      {% if post.date | date(format="%Y") == year %}
+      <li class="post-item">
+        <a href="{{ post.permalink | safe }}" class="post-item-link">
+          <span class="post-date">{{ macros::pretty_date(date=post.date) }}</span>
+          <span class="post-title">{{ post.title }}</span>
+          {% if post.description %}
+          <span class="post-desc">{{ post.description }}</span>
+          {% endif %}
+        </a>
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+
+{% if posts | length == 0 %}
+<p class="muted">Nothing here yet.</p>
+{% endif %}
+{% endblock content %}

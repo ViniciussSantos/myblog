@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ page.title }} — {{ config.title }}{% endblock title %}
+{% block description %}{{ page.description | default(value=page.title) }}{% endblock description %}
+
+{% block content %}
+<article class="post">
+  <header class="post-header">
+    {% if page.extra.eyebrow %}<p class="eyebrow">{{ page.extra.eyebrow }}</p>{% endif %}
+    <h1>{{ page.title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ page.date | date(format="%Y-%m-%d") }}">{{ macros::pretty_date(date=page.date) }}</time>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>{{ macros::reading_time(page=page) }}</span>
+      {% if page.taxonomies and page.taxonomies.tags %}
+      <span class="dot" aria-hidden="true">·</span>
+      <ul class="tag-list" aria-label="Tags">
+        {% for tag in page.taxonomies.tags %}
+        <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="prose">
+    {{ page.content | safe }}
+  </div>
+
+  <footer class="post-footer">
+    <a href="{{ get_url(path="/blog/") | safe }}" class="back-link">← Back to all posts</a>
+  </footer>
+</article>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{# Shared helpers used across templates. #}
+
+{# Render a single nav link, marking the current section active. #}
+{% macro nav_link(item, current_path) %}
+  {% set is_active = current_path == item.url
+      or (item.url != "/" and current_path is starting_with(item.url)) %}
+  <a href="{{ item.url | safe }}" class="nav-link{% if is_active %} active{% endif %}">
+    {{ item.name }}
+  </a>
+{% endmacro nav_link %}
+
+{# Format an ISO date as e.g. "Jul 21, 2026". #}
+{% macro pretty_date(date) %}
+  {{ date | date(format="%b %-d, %Y") }}
+{% endmacro pretty_date %}
+
+{# Estimate reading time from page word count (rough: 200 wpm). #}
+{% macro reading_time(page) %}
+  {% set words = page.content | wordcount %}
+  {% set minutes = (words / 200) | round(method="ceil") %}
+  {% if minutes < 1 %}1{% else %}{{ minutes }}{% endif %} min read
+{% endmacro reading_time %}

@@ -1,0 +1,117 @@
+// Catppuccin palette.
+// Dark = Mocha, Light = Latte. Exposed as CSS custom properties so the
+// theme can be switched at runtime via [data-theme].
+
+:root {
+  // Shared
+  --radius: 10px;
+  --radius-sm: 6px;
+  --maxw: 760px;
+  --maxw-wide: 1040px;
+  --pad: 1.5rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+    "Times New Roman", serif;
+  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+// Catppuccin Mocha (dark, default)
+[data-theme="dark"] {
+  --base:      #1e1e2e;
+  --mantle:    #181825;
+  --crust:     #11111b;
+  --surface0:  #313244;
+  --surface1:  #45475a;
+  --surface2:  #585b70;
+  --overlay0:  #6c7086;
+  --overlay1:  #7f849c;
+  --overlay2:  #9399b2;
+  --text:      #cdd6f4;
+  --subtext1:  #bac2de;
+  --subtext0:  #a6adc8;
+  --blue:      #89b4fa;
+  --lavender:  #b4befe;
+  --sapphire:  #74c7ec;
+  --sky:       #89dceb;
+  --teal:      #94e2d5;
+  --green:     #a6e3a1;
+  --yellow:    #f9e2af;
+  --peach:     #fab387;
+  --maroon:    #eba0ac;
+  --red:       #f38ba8;
+  --mauve:     #cba6f7;
+  --pink:      #f5c2e7;
+  --flamingo:  #f2cdcd;
+  --rosewater: #f5e0dc;
+
+  --bg:           var(--base);
+  --bg-elev:      var(--mantle);
+  --bg-sunken:    var(--crust);
+  --border:       color-mix(in srgb, var(--surface0) 80%, transparent);
+  --border-strong:var(--surface1);
+  --fg:           var(--text);
+  --fg-muted:     var(--subtext0);
+  --fg-faint:     var(--overlay1);
+  --accent:       var(--mauve);
+  --accent-2:     var(--lavender);
+  --link:         var(--blue);
+  --selection:    color-mix(in srgb, var(--mauve) 35%, transparent);
+  --header-bg:    color-mix(in srgb, var(--mantle) 75%, transparent);
+  --code-bg:      var(--crust);
+  --card-bg:      color-mix(in srgb, var(--surface0) 35%, transparent);
+  --shadow-md:    0 12px 40px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+// Catppuccin Latte (light)
+[data-theme="light"] {
+  --base:      #eff1f5;
+  --mantle:    #e6e9ef;
+  --crust:     #dce0e8;
+  --surface0:  #ccd0e5;
+  --surface1:  #bcc0e0;
+  --surface2:  #acb3d0;
+  --overlay0:  #9799b8;
+  --overlay1:  #8c8fa1;
+  --overlay2:  #8087a8;
+  --text:      #4c4f69;
+  --subtext1:  #5c5f77;
+  --subtext0:  #6c6f85;
+  --blue:      #1e66f5;
+  --lavender:  #7287fd;
+  --sapphire:  #209fb5;
+  --sky:       #04a5e5;
+  --teal:      #179299;
+  --green:     #40a02b;
+  --yellow:    #df8e1d;
+  --peach:     #fe640b;
+  --maroon:    #e64553;
+  --red:       #d20f39;
+  --mauve:     #8839ef;
+  --pink:      #ea76cb;
+  --flamingo:  #dd7878;
+  --rosewater: #dc8a78;
+
+  --bg:           var(--base);
+  --bg-elev:      var(--mantle);
+  --bg-sunken:    var(--crust);
+  --border:       color-mix(in srgb, var(--surface0) 60%, transparent);
+  --border-strong:var(--surface1);
+  --fg:           var(--text);
+  --fg-muted:     var(--subtext0);
+  --fg-faint:     var(--overlay1);
+  --accent:       var(--mauve);
+  --accent-2:     var(--lavender);
+  --link:         var(--blue);
+  --selection:    color-mix(in srgb, var(--mauve) 22%, transparent);
+  --header-bg:    color-mix(in srgb, var(--base) 80%, transparent);
+  --code-bg:      var(--crust);
+  --card-bg:      color-mix(in srgb, var(--surface0) 28%, transparent);
+  --shadow-md:    0 10px 30px rgba(76, 79, 105, 0.14);
+  color-scheme: light;
+}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — {{ config.title }}{% endblock title %}
+{% block description %}{{ page.description | default(value=page.title) }}{% endblock description %}
+
+{% block content %}
+<article class="page{% if page.extra.printable %} printable{% endif %}">
+  <header class="page-head">
+    <div>
+      {% if page.extra.eyebrow %}<p class="eyebrow">{{ page.extra.eyebrow }}</p>{% endif %}
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p class="muted page-subtitle">{{ page.description }}</p>{% endif %}
+    </div>
+    {% if page.extra.printable %}
+    <button class="btn btn-ghost print-btn" type="button" onclick="window.print()">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      Print
+    </button>
+    {% endif %}
+  </header>
+
+  <div class="prose">
+    {{ page.content | safe }}
+  </div>
+</article>
+{% endblock content %}
