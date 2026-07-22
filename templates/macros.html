@@ -4,7 +4,7 @@
 {% macro nav_link(item, current_path) %}
   {% set is_active = current_path == item.url
       or (item.url != "/" and current_path is starting_with(item.url)) %}
-  <a href="{{ item.url | safe }}" class="nav-link{% if is_active %} active{% endif %}">
+  <a href="{{ get_url(path=item.url) | safe }}" class="nav-link{% if is_active %} active{% endif %}">
     {{ item.name }}
   </a>
 {% endmacro nav_link %}
