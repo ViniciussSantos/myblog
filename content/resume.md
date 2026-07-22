@@ -1,6 +1,5 @@
 +++
-title = "Vinicius — Resume"
-description = "Backend engineer specializing in data infrastructure and performance-critical systems."
+title = "Resume"
 path = "resume"
 template = "page.html"
 [extra]
